@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikilog;
+
 class Wikilog
 {
     public function start(): void
