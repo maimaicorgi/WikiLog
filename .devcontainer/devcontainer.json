@@ -4,5 +4,12 @@
 		"../docker-compose.yml"
 	],
 	"service": "app",
-	"workspaceFolder": "/var/www/html"
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"xdebug.php-debug"
+			]
+		}
+	}
 }
