@@ -1,10 +1,11 @@
 {
     "name": "root/html",
-    "require": {},
     "require-dev": {
-        "squizlabs/php_codesniffer": "3.*"
+        "squizlabs/php_codesniffer": "3.*",
+        "phpstan/phpstan": "^1.10"
     },
     "scripts": {
-        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml"
+        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml",
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon --ansi"
     }
 }

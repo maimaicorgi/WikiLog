@@ -10,6 +10,15 @@
         'dev' => true,
     ),
     'versions' => array(
+        'phpstan/phpstan' => array(
+            'pretty_version' => '1.10.6',
+            'version' => '1.10.6.0',
+            'reference' => '50d089a3e0904b0fe7e2cf2d4fd37d427d64235a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpstan/phpstan',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'root/html' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
