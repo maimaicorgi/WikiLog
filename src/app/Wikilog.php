@@ -34,6 +34,5 @@ class Wikilog
 
     private function checkDb(): void
     {
-
     }
 }

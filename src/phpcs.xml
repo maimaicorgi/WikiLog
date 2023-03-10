@@ -6,7 +6,7 @@
     <arg name="colors"/>
     <arg value="s"/>
 
-    <rule ref="PSR1">
-        <!-- <exclude name=""/> -->
+    <rule ref="PSR12">
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis"/>
     </rule>
 </ruleset>
