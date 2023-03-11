@@ -2,11 +2,16 @@
 
 namespace Wikilog;
 
+use PDO;
+use PDOException;
+
 class Wikilog
 {
+    private PDO $dbHandler;
+
     public function start(): void
     {
-        $this->checkDb();
+        $this->connectDb();
 
         while (true)
         {
@@ -27,12 +32,23 @@ class Wikilog
                 case '8':
                     break;
                 case '9':
-                    exit('アプリを終了しました。' . PHP_EOL);
+                    exit('アプリを終了します。' . PHP_EOL);
             }
         }
     }
 
-    private function checkDb(): void
+    private function connectDb(): void
     {
+        try
+        {
+            $this->dbHandler = new PDO('mysql:host=db;dbname=wikilog', 'user', 'pass');
+        }
+        catch (PDOException $ex)
+        {
+            echo 'データベースに接続できません。' . PHP_EOL;
+            echo 'Error: ' . $ex->getMessage() . PHP_EOL;
+
+            exit('アプリを終了します。' . PHP_EOL);
+        }
     }
 }
