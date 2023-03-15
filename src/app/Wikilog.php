@@ -4,6 +4,7 @@ namespace Wikilog;
 
 use PDO;
 use PDOException;
+use PDOStatement;
 
 class Wikilog
 {
@@ -71,13 +72,7 @@ class Wikilog
 
         $result = $this->dbHandler->query($sql);
 
-        echo $result->rowCount() . '件の検索結果' . PHP_EOL;
-        echo '-----------------------------------------------------' . PHP_EOL;
-        foreach ($result as $row)
-        {
-            echo join(' ', $row) . PHP_EOL;
-        }
-        echo '-----------------------------------------------------' . PHP_EOL;
+        $this->printResult($result);
     }
 
     private function showViewsByDomain(array $domains): void
@@ -94,6 +89,11 @@ class Wikilog
 
         $result = $this->dbHandler->query($sql);
 
+        $this->printResult($result);
+    }
+
+    private function printResult(PDOStatement $result): void
+    {
         echo $result->rowCount() . '件の検索結果' . PHP_EOL;
         echo '-----------------------------------------------------' . PHP_EOL;
         foreach ($result as $row)
