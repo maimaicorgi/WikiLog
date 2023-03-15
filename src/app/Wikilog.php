@@ -20,13 +20,23 @@ class Wikilog
             echo '2 : ログ検索 その２' . PHP_EOL;
             echo '9 : アプリを終了する' . PHP_EOL;
 
-            $input = fgets(STDIN);
+            $menu = fgets(STDIN);
 
-            switch ($input)
+            switch ($menu)
             {
                 case '1':
+                    echo '表示する記事数を入力してください。' . PHP_EOL;
+
+                    $num = (int)fgets(STDIN);
+                    $this->showPageViews($num);
+
                     break;
                 case '2':
+                    echo '表示するドメインコードをスペース区切りで入力してください。' . PHP_EOL;
+
+                    $domain = fgets(STDIN);
+                    $this->showViewsByDomain($domain);
+
                     break;
                 case '9':
                     exit('アプリを終了します。' . PHP_EOL);
@@ -47,5 +57,13 @@ class Wikilog
 
             exit('アプリを終了します。' . PHP_EOL);
         }
+    }
+
+    private function showPageViews(int $num): void
+    {
+    }
+
+    private function showViewsByDomain(string ...$domains): void
+    {
     }
 }
