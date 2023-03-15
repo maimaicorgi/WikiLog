@@ -34,8 +34,8 @@ class Wikilog
                 case '2':
                     echo '表示するドメインコードをスペース区切りで入力してください。' . PHP_EOL;
 
-                    $domain = fgets(STDIN);
-                    $this->showViewsByDomain($domain);
+                    $domains = explode(' ', trim(fgets(STDIN)));
+                    $this->showViewsByDomain($domains);
 
                     break;
                 case '9':
@@ -80,7 +80,26 @@ class Wikilog
         echo '-----------------------------------------------------' . PHP_EOL;
     }
 
-    private function showViewsByDomain(string ...$domains): void
+    private function showViewsByDomain(array $domains): void
     {
+        $inClause = join("', '", $domains);
+
+        $sql = <<<EOT
+            SELECT domain_code, SUM(count_views) AS total_views
+            FROM logs
+            WHERE domain_code IN ('{$inClause}')
+            GROUP BY domain_code
+            ORDER BY total_views DESC
+        EOT;
+
+        $result = $this->dbHandler->query($sql);
+
+        echo $result->rowCount() . '件の検索結果' . PHP_EOL;
+        echo '-----------------------------------------------------' . PHP_EOL;
+        foreach ($result as $row)
+        {
+            echo join(' ', $row) . PHP_EOL;
+        }
+        echo '-----------------------------------------------------' . PHP_EOL;
     }
 }
