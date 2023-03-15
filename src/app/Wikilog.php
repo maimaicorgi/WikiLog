@@ -49,6 +49,7 @@ class Wikilog
         try
         {
             $this->dbHandler = new PDO('mysql:host=db;dbname=wikilog', 'user', 'pass');
+            $this->dbHandler->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }
         catch (PDOException $ex)
         {
@@ -61,6 +62,22 @@ class Wikilog
 
     private function showPageViews(int $num): void
     {
+        $sql = <<<EOT
+            SELECT domain_code, page_title, count_views
+            FROM logs
+            ORDER BY count_views DESC
+            LIMIT {$num}
+        EOT;
+
+        $result = $this->dbHandler->query($sql);
+
+        echo $result->rowCount() . '件の検索結果' . PHP_EOL;
+        echo '-----------------------------------------------------' . PHP_EOL;
+        foreach ($result as $row)
+        {
+            echo join(' ', $row) . PHP_EOL;
+        }
+        echo '-----------------------------------------------------' . PHP_EOL;
     }
 
     private function showViewsByDomain(string ...$domains): void
