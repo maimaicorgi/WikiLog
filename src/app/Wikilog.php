@@ -8,12 +8,15 @@ use PDOStatement;
 
 class Wikilog
 {
-    private PDO $dbHandler;
+    private ?PDO $dbHandler = null;
+
+    public function __construct(PDO $dbHandler)
+    {
+        $this->dbHandler = $dbHandler;
+    }
 
     public function start(): void
     {
-        $this->connectDb();
-
         while (true)
         {
             echo '操作を選択してください。' . PHP_EOL;
@@ -42,22 +45,6 @@ class Wikilog
                 case '9':
                     exit('アプリを終了します。' . PHP_EOL);
             }
-        }
-    }
-
-    private function connectDb(): void
-    {
-        try
-        {
-            $this->dbHandler = new PDO('mysql:host=db;dbname=wikilog', 'user', 'pass');
-            $this->dbHandler->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }
-        catch (PDOException $ex)
-        {
-            echo 'データベースに接続できません。' . PHP_EOL;
-            echo 'Error: ' . $ex->getMessage() . PHP_EOL;
-
-            exit('アプリを終了します。' . PHP_EOL);
         }
     }
 
