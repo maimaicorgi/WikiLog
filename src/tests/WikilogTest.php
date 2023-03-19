@@ -27,20 +27,26 @@ function fgets(): string
     return WikilogTest::$simulator->next();
 }
 
+// ------------------------ Test Class ------------------------
 final class WikilogTest extends TestCase
 {
     public static InputSimulator $simulator;
+    private \PDO $mockedDb;
 
-    public function testStart_menu1(): void
+    protected function setUp(): void
     {
         WikilogTest::$simulator = new InputSimulator();
-        WikilogTest::$simulator->setValues([1, 2, 9]);
 
-        $mockedDb = $this->getMockBuilder(\PDO::class)
+        $this->mockedDb = $this->getMockBuilder(\PDO::class)
                         ->disableOriginalConstructor()
                         ->disableArgumentCloning()
                         ->disallowMockingUnknownTypes()
                         ->getMock();
+    }
+
+    public function testStart_menu1(): void
+    {
+        WikilogTest::$simulator->setValues([1, 2, 9]);
 
         $mockedResult = new class extends \PDOStatement implements \IteratorAggregate
                             {
@@ -75,7 +81,7 @@ final class WikilogTest extends TestCase
             LIMIT 2
         EOT;
 
-        $mockedDb->method('query')
+        $this->mockedDb->method('query')
         ->will($this->returnCallback(
             function($arg) use($sql, $mockedResult)
             {
@@ -84,7 +90,7 @@ final class WikilogTest extends TestCase
         ));
 
         // ------------------------ Test ------------------------
-        $wikilog = new Wikilog($mockedDb);
+        $wikilog = new Wikilog($this->mockedDb);
         $wikilog->start();
 
         $this->expectOutputString('操作を選択してください。' . PHP_EOL
@@ -106,14 +112,7 @@ final class WikilogTest extends TestCase
 
     public function testStart_menu2(): void
     {
-        WikilogTest::$simulator = new InputSimulator();
         WikilogTest::$simulator->setValues([2, 'ab cd', 9]);
-
-        $mockedDb = $this->getMockBuilder(\PDO::class)
-                        ->disableOriginalConstructor()
-                        ->disableArgumentCloning()
-                        ->disallowMockingUnknownTypes()
-                        ->getMock();
 
         $mockedResult = new class extends \PDOStatement implements \IteratorAggregate
                             {
@@ -147,7 +146,7 @@ final class WikilogTest extends TestCase
             ORDER BY total_views DESC
         EOT;
 
-        $mockedDb->method('query')
+        $this->mockedDb->method('query')
         ->will($this->returnCallback(
             function($arg) use($sql, $mockedResult)
             {
@@ -156,7 +155,7 @@ final class WikilogTest extends TestCase
         ));
 
         // ------------------------ Test ------------------------
-        $wikilog = new Wikilog($mockedDb);
+        $wikilog = new Wikilog($this->mockedDb);
         $wikilog->start();
 
         $this->expectOutputString('操作を選択してください。' . PHP_EOL
@@ -178,17 +177,10 @@ final class WikilogTest extends TestCase
 
     public function testStart_menu9(): void
     {
-        WikilogTest::$simulator = new InputSimulator();
         WikilogTest::$simulator->setValues([9]);
 
-        $mockedDb = $this->getMockBuilder(\PDO::class)
-                        ->disableOriginalConstructor()
-                        ->disableArgumentCloning()
-                        ->disallowMockingUnknownTypes()
-                        ->getMock();
-
         // ------------------------ Test ------------------------
-        $wikilog = new Wikilog($mockedDb);
+        $wikilog = new Wikilog($this->mockedDb);
         $wikilog->start();
 
         $this->expectOutputString('操作を選択してください。' . PHP_EOL
