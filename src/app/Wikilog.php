@@ -17,7 +17,9 @@ class Wikilog
 
     public function start(): void
     {
-        while (true)
+        $isRunning = true;
+
+        while ($isRunning)
         {
             echo '操作を選択してください。' . PHP_EOL;
             echo '1 : ログ検索 その１' . PHP_EOL;
@@ -43,7 +45,10 @@ class Wikilog
 
                     break;
                 case '9':
-                    exit('アプリを終了します。' . PHP_EOL);
+                    echo 'アプリを終了します。' . PHP_EOL;
+                    $isRunning = false;
+
+                    break;
             }
         }
     }
