@@ -176,8 +176,25 @@ final class WikilogTest extends TestCase
                             . 'アプリを終了します。' . PHP_EOL);
     }
 
-    // public function testStart_menu9(): void
-    // {
+    public function testStart_menu9(): void
+    {
+        WikilogTest::$simulator = new InputSimulator();
+        WikilogTest::$simulator->setValues([9]);
 
-    // }
+        $mockedDb = $this->getMockBuilder(\PDO::class)
+                        ->disableOriginalConstructor()
+                        ->disableArgumentCloning()
+                        ->disallowMockingUnknownTypes()
+                        ->getMock();
+
+        // ------------------------ Test ------------------------
+        $wikilog = new Wikilog($mockedDb);
+        $wikilog->start();
+
+        $this->expectOutputString('操作を選択してください。' . PHP_EOL
+                            . '1 : ログ検索 その１' . PHP_EOL
+                            . '2 : ログ検索 その２' . PHP_EOL
+                            . '9 : アプリを終了する' . PHP_EOL
+                            . 'アプリを終了します。' . PHP_EOL);
+    }
 }
