@@ -9,7 +9,10 @@
     "scripts": {
         "phpcs": "vendor/bin/phpcs --standard=phpcs.xml",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon --ansi",
-        "phpmd": "vendor/bin/phpmd . text phpmd.xml --exclude vendor",
+        "phpmd": "vendor/bin/phpmd app text phpmd.xml --exclude vendor",
         "phpunit": "vendor/bin/phpunit"
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
     }
 }

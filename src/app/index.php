@@ -1,13 +1,17 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/Wikilog.php';
 
 use PDO;
 use Wikilog\Wikilog;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
 try
 {
-    $dbHandler = new PDO('mysql:host=db;dbname=wikilog', 'user', 'pass');
+    $dbHandler = new PDO('mysql:host=db;dbname=wikilog', $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
 }
 catch (PDOException $ex)
 {
