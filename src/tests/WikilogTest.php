@@ -7,6 +7,7 @@ require_once __DIR__ . '/../app/Wikilog.php';
 use PHPUnit\Framework\TestCase;
 use Wikilog\Wikilog;
 
+// 標準入力をシミュレートするクラス
 class InputSimulator
 {
     private array $values;
@@ -22,6 +23,8 @@ class InputSimulator
     }
 }
 
+// アプリ側コードにおけるfgets(STDIN)のオーバーライド
+// アプリ側コードからはこのテストコードは見えないため、アプリ実行時は通常のfgets関数が呼ばれる
 function fgets(): string
 {
     return WikilogTest::$simulator->next();

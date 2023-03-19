@@ -1,3 +1,4 @@
 /docker/db/mysql_data
 /src/app/import
+/src/.phpunit.cache
 /src/.phpunit.result.cache
